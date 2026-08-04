@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Interactive Periodic Table of Elements</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>🧪 Periodic Table</h1>
+    
+    <div class="controls">
+      <button id="btnTable" class="active" onclick="switchView('table')">Grid View</button>
+      <button id="btnQuiz" onclick="switchView('quiz')">Quiz Mode</button>
+      <button id="btnCompare" onclick="switchView('compare')">Compare (<span id="compareCount">0</span>)</button>
+
+      <div class="custom-dropdown" id="categoryDropdown">
+        <button class="dropdown-trigger" onclick="toggleDropdown('categoryDropdown')">
+          <span id="currentCategoryLabel">Filter Category</span> <span class="arrow">▾</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li onclick="filterCategory('all', 'All Categories')">All Categories</li>
+          <li onclick="filterCategory('alkali', 'Alkali Metals')">Alkali Metals</li>
+          <li onclick="filterCategory('alkaline', 'Alkaline Earth Metals')">Alkaline Earth Metals</li>
+          <li onclick="filterCategory('transition', 'Transition Metals')">Transition Metals</li>
+          <li onclick="filterCategory('post-transition', 'Post-Transition Metals')">Post-Transition Metals</li>
+          <li onclick="filterCategory('metalloid', 'Metalloids')">Metalloids</li>
+          <li onclick="filterCategory('nonmetal', 'Reactive Nonmetals')">Reactive Nonmetals</li>
+          <li onclick="filterCategory('noble', 'Noble Gases')">Noble Gases</li>
+          <li onclick="filterCategory('lanthanide', 'Lanthanides')">Lanthanides</li>
+          <li onclick="filterCategory('actinide', 'Actinides')">Actinides</li>
+        </ul>
+      </div>
+
+      <div class="custom-dropdown" id="themeDropdown">
+        <button class="dropdown-trigger" onclick="toggleDropdown('themeDropdown')">
+          <span id="currentThemeLabel">Dark Theme</span> <span class="arrow">▾</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li onclick="selectTheme('dark', 'Dark Theme')">Dark Theme</li>
+          <li onclick="selectTheme('light', 'Light Theme')">Light Theme</li>
+          <li onclick="selectTheme('high-contrast', 'High-Contrast')">High-Contrast</li>
+          <li onclick="selectTheme('vibrant', 'Vibrant Theme')">Vibrant Theme</li>
+          <li onclick="selectTheme('glass', 'Glass-Morphed')">Glass-Morphed</li>
+          <li onclick="selectTheme('clay', 'Clay-Morphed')">Clay-Morphed</li>
+          <li onclick="selectTheme('neon', 'Neon Cyberpunk')">Neon Cyberpunk</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-layout" id="tableView">
+    <main class="table-container">
+      <div class="periodic-table" id="periodicGrid">
+        </div>
+    </main>
+
+    <aside class="info-sidebar" id="infoPanel">
+      <div class="sidebar-placeholder" id="sidebarPlaceholder">
+        <div class="placeholder-icon">⚛️</div>
+        <h3>Element Details</h3>
+        <p>Hover over or click any element in the grid to view its structure, atomic properties, and configuration.</p>
+      </div>
+
+      <div class="sidebar-content" id="sidebarContent" style="display: none;">
+        <div class="info-header">
+          <div class="info-badge" id="infoNum">#1</div>
+          <div class="info-symbol-box" id="infoSymbolBox">
+            <span class="info-symbol" id="infoSymbol">H</span>
+          </div>
+          <div>
+            <h2 class="info-name" id="infoName">Hydrogen</h2>
+            <div class="info-category" id="infoCategory">Nonmetal</div>
+          </div>
+        </div>
+
+        <button id="btnAddToCompare" class="compare-toggle-btn" onclick="toggleCurrentElementCompare()">
+          ➕ Add to Compare
+        </button>
+
+        <div class="atom-diagram-box">
+          <h4>Bohr Atom Structure</h4>
+          <div class="svg-wrapper" id="atomSvgContainer">
+            </div>
+        </div>
+
+        <div class="info-details-grid">
+          <div class="detail-item">
+            <span class="detail-label">Atomic Number</span>
+            <span class="detail-val" id="valNum">1</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Atomic Mass</span>
+            <span class="detail-val" id="valMass">1.008 u</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Melting Point</span>
+            <span class="detail-val" id="valMelting">13.99 K</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Boiling Point</span>
+            <span class="detail-val" id="valBoiling">20.27 K</span>
+          </div>
+          <div class="detail-item full-width">
+            <span class="detail-label">Shortened Config</span>
+            <span class="detail-val" id="valConfig">1s¹</span>
+          </div>
+          <div class="detail-item full-width">
+            <span class="detail-label">Expanded Config</span>
+            <span class="detail-val" id="valFullConfig">1s¹</span>
+          </div>
+        </div>
+
+        <div class="info-fact-box">
+          💡 <strong>Fact:</strong> <span id="valFact">Most abundant chemical substance in the Universe.</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="panel" id="quizPanel">
+    <div class="quiz-header">
+      <h2>Element Knowledge Quiz</h2>
+      <div class="score-badge">Score: <span id="quizScore">0</span> / <span id="quizTotal">0</span></div>
+    </div>
+    <div class="quiz-question-box" id="quizQuestion">Loading Question...</div>
+    <div class="quiz-options" id="quizOptions"></div>
+  </section>
+
+  <section class="panel" id="comparePanel">
+    <div class="quiz-header">
+      <h2>Element Comparison</h2>
+      <button onclick="clearComparison()">Reset Selection</button>
+    </div>
+    <p id="compareInstruction" style="margin-bottom:15px; color:var(--text-muted);">
+      Select elements from the sidebar using <strong>"➕ Add to Compare"</strong> to inspect multiple elements side-by-side.
+    </p>
+    <div class="compare-grid" id="compareGrid">
+      <p style="text-align:center; grid-column: 1 / -1; color:var(--text-muted); padding: 40px 0;">No elements selected for comparison.</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
