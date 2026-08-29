@@ -30,6 +30,9 @@
   --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
   --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   --card-hover-bg: #334155;
+
+  --credit-author: #7ee787;
+  --credit-photon: #58a6ff;
 }
 
 /* --- Light Mode --- */
@@ -45,6 +48,8 @@
   --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   --card-shadow: 0 2px 4px rgba(0,0,0,0.05);
   --card-hover-bg: #f8fafc;
+  --credit-author: #a29bfe;
+  --credit-photon: #58a6ff;
 }
 
 /* --- High-Contrast Mode --- */
@@ -84,6 +89,8 @@
   --box-shadow: 0 10px 30px rgba(255, 42, 133, 0.3);
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   --card-hover-bg: #611b62;
+  --credit-author: #ffeaa7;
+  --credit-photon: #00ffff;
 }
 
 /* --- Glass-Morphed Theme --- */
@@ -99,6 +106,8 @@
   --box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
   --card-hover-bg: rgba(255, 255, 255, 0.18);
+  --credit-author: #ffeaa7;
+  --credit-photon: #00ffff;
 }
 
 /* --- Clay-Morphed Theme --- */
@@ -117,6 +126,8 @@
   --cat-transition: #0077ff;
   --cat-post-transition: #0004ff5b;
   --cat-nonmetal: #a8cde6;
+  --credit-author: #fd79a8;
+  --credit-photon: #0077ff;
 }
 
 /* --- Neon Theme --- */
@@ -132,6 +143,8 @@
   --box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
   --card-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
   --card-hover-bg: #151c2e;
+  --credit-author: #ff00ff;
+  --credit-photon: #ffeaa7;
 }
 
 /* ==========================================================================
@@ -766,12 +779,38 @@ button.active {
   scrollbar-color: var(--card-border) transparent;
 }
 
+#credit-card {
+    position: relative;
+    background: transparent;
+    padding: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    pointer-events: none;
+    align-self: center;
+}
+.credit-photon {
+    font-size: 0.72rem;
+    color: var(--credit-photon);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    align-self: center;
+}
+.credit-author {
+    font-size: 0.76rem;
+    color: var(--credit-author);
+    font-weight: 500;
+    align-self: center;
+}
+
 /* ==========================================================================
    8. MOBILE & TABLET MEDIA QUERIES
    ========================================================================== */
 
 /* --- Tablet / Medium Mobile (Max Width: 900px) --- */
-@media (max-width: 900px) {
+@media (max-width: 1440px) {
   header {
     flex-direction: column;
     align-items: stretch;
